@@ -16,5 +16,6 @@ namespace PhysicsSimulation
             } 
         }
         public System.Drawing.PointF POINT_last { get; set; }
+        public double Impulse { get; set; }
     }
 }

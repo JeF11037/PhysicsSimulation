@@ -81,6 +81,7 @@ namespace PhysicsSimulation
                     {
                         figure.DrawNewPosition(e.X - strongbox.POINT_last.X, e.Y - strongbox.POINT_last.Y);
                     }
+                    strongbox.Impulse = e.X - strongbox.POINT_last.X;
                     strongbox.POINT_last = new System.Drawing.Point(e.X, e.Y);
                     break;
             }
@@ -112,18 +113,9 @@ namespace PhysicsSimulation
         private void UseGravity()
         {
             figure.GetLower();
-            if (figure.Ground - figure.Lower.Y > 0)
-            {
-                figure.UseGravity();
-                ShowStat(figure);
-                figure.Time++;
-            }
-            else
-            {
-                figure.DrawNewPosition(figure.Lower.X, figure.Ground);
-                figure.OnGround = true;
-                figure.Time = 0;
-            }
+            figure.UseGravity(strongbox.Impulse);
+            ShowStat(figure);
+            figure.Time++;
         }
 
         private void ShowStat(Object obj)

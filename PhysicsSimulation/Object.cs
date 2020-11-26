@@ -27,10 +27,11 @@ namespace PhysicsSimulation
             pen = p;
         }
 
-        public void UseGravity()
+        public void UseGravity(double impulse)
         {
             Speed = GetGravity(Time);
-            DrawNewPosition(0, Speed);
+            impulse += Speed * array.Length * Math.Pow(10, -3);
+            DrawNewPosition(impulse, Speed);
         }
 
         public void GetLower()
@@ -50,8 +51,24 @@ namespace PhysicsSimulation
             canvas.Clear(Color.Wheat);
             for (int tick = 0; tick < array.Length; tick++)
             {
-                array[tick].X += (float)X;
-                array[tick].Y += (float)Y;
+                if (array[tick].X + (float)X <= 900 && array[tick].X + (float)X >= 0)
+                {
+                    array[tick].X += (float)X;
+                }
+                else
+                {
+                    OnGround = true;
+                    Time = 0;
+                }
+                if (array[tick].Y + (float)Y <= 600 && array[tick].Y + (float)Y >= 0)
+                {
+                    array[tick].Y += (float)Y;
+                }
+                else
+                {
+                    OnGround = true;
+                    Time = 0;
+                }
             }
             canvas.DrawLines(pen, array);
         }
