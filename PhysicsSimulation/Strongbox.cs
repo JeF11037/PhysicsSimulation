@@ -15,13 +15,6 @@ namespace PhysicsSimulation
                 return new System.Drawing.Pen(System.Drawing.Color.Black, 2);
             } 
         }
-        public System.Drawing.Pen PEN_pens
-        {
-            get
-            {
-                return new System.Drawing.Pen(System.Drawing.Color.Wheat, 2);
-            }
-        }
         public System.Drawing.PointF POINT_last { get; set; }
     }
 }

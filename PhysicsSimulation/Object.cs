@@ -12,42 +12,25 @@ namespace PhysicsSimulation
 {
     class Object
     {
-        bool OnGround = false;
-        double Ground = 644;
-        PointF Lower = new PointF(1000, 1000);
-        PointF[] array;
-        Graphics canvas;
-        Pen pen;
-        Pen pens;
-        public Object(Graphics c, Pen p, Pen ps, PointF[] a)
+        public bool OnGround = false;
+        public double Ground = 600;
+        public PointF Lower = new PointF(0, 0);
+        public PointF[] array;
+        public Graphics canvas;
+        public Pen pen;
+        public double Speed;
+        public double Time = 0;
+        public Object(Graphics c, Pen p, PointF[] a)
         {
             array = a;
             canvas = c;
             pen = p;
-            pens = ps;
-            canvas.DrawLines(pen, array);
-        }
-
-        public void Simulate()
-        {
-            while (!OnGround)
-            {
-                GetLower();
-                if (Ground - Lower.Y > 0)
-                {
-                    UseGravity();
-                }
-                else
-                {
-                    OnGround = true;
-                }
-                System.Threading.Thread.Sleep(10);
-            }
         }
 
         public void UseGravity()
         {
-            DrawNewPosition(0, GetGravity(Ground - Lower.Y));
+            Speed = GetGravity(Time);
+            DrawNewPosition(0, Speed);
         }
 
         public void GetLower()
@@ -55,7 +38,7 @@ namespace PhysicsSimulation
             foreach (var el in array)
             {
                 PointF point = el;
-                if (point.Y < Lower.Y)
+                if (point.Y > Lower.Y)
                 {
                     Lower = point;
                 }
@@ -64,19 +47,18 @@ namespace PhysicsSimulation
 
         public void DrawNewPosition(double X, double Y)
         {
-            foreach (var el in array)
+            canvas.Clear(Color.Wheat);
+            for (int tick = 0; tick < array.Length; tick++)
             {
-                PointF point = el;
-                point.X += (float)X;
-                point.Y += (float)Y;
+                array[tick].X += (float)X;
+                array[tick].Y += (float)Y;
             }
             canvas.DrawLines(pen, array);
-            canvas.DrawLines(pens, array);
         }
 
-        public double GetGravity(double r)
+        public double GetGravity(double t)
         {
-            return 6.67 * (double)array.Length / (Math.Pow(r, 2) * Math.Pow(10, -1));
+            return t + (9.8 * Math.Pow(t, 2) / 2) * Math.Pow(10, -10);
         }
     }
 }

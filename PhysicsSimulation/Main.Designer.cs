@@ -53,7 +53,10 @@ namespace PhysicsSimulation
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(913, 644);
             this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.pictureBox1.TabStop = false; 
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseUp);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // label1
             // 
@@ -110,18 +113,20 @@ namespace PhysicsSimulation
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(87, 313);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.label3.Location = new System.Drawing.Point(40, 313);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(14, 13);
+            this.label3.Size = new System.Drawing.Size(30, 29);
             this.label3.TabIndex = 6;
             this.label3.Text = "X";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(206, 313);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(186)));
+            this.label4.Location = new System.Drawing.Point(204, 313);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(14, 13);
+            this.label4.Size = new System.Drawing.Size(29, 29);
             this.label4.TabIndex = 7;
             this.label4.Text = "Y";
             // 
@@ -168,36 +173,6 @@ namespace PhysicsSimulation
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
-
-        private void pictureBox2_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case System.Windows.Forms.MouseButtons.Left:
-                    if (strongbox.POINT_last.X != 0 && strongbox.POINT_last.Y != 0)
-                    {
-                        GRAPHICS_CANVAS_drawCanvas.DrawLine(strongbox.PEN_pen, strongbox.POINT_last.X, strongbox.POINT_last.Y, e.X, e.Y);
-                        System.Drawing.PointF[] TEMP_point = strongbox.POINT_array;
-                        TEMP_point = TEMP_point.Concat(new System.Drawing.PointF[] { new System.Drawing.PointF(e.X, e.Y)}).ToArray();
-                        strongbox.POINT_array = TEMP_point;
-                    }
-                    strongbox.POINT_last = new System.Drawing.Point(e.X, e.Y);
-                    break;
-                case System.Windows.Forms.MouseButtons.None:
-                    break;
-                case System.Windows.Forms.MouseButtons.Right:
-                    break;
-                case System.Windows.Forms.MouseButtons.Middle:
-                    break;
-                case System.Windows.Forms.MouseButtons.XButton1:
-                    break;
-                case System.Windows.Forms.MouseButtons.XButton2:
-                    break;
-                default:
-                    break;
-            }
-            strongbox.POINT_offset = e.Location;
         }
 
         #endregion
